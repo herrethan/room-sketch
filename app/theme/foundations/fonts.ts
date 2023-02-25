@@ -1,4 +1,4 @@
-import { ThemeOverride } from '@chakra-ui/react';
+import type { ThemeOverride } from '@chakra-ui/react';
 
 const fonts: ThemeOverride['fonts'] = {
   heading: 'Circular, Roboto, Oxygen, Droid Sans, Helvetica Neue, sans-serif',

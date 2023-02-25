@@ -1,4 +1,4 @@
-import { ThemeOverride } from '@chakra-ui/react';
+import type { ThemeOverride } from '@chakra-ui/react';
 
 const colors: ThemeOverride['colors'] = {
   transparent: 'transparent',
