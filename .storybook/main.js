@@ -1,16 +1,16 @@
 module.exports = {
-  stories: [
-    "../stories/**/*.stories.mdx",
-    "../stories/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-  ],
-  framework: "@storybook/react",
+  stories: ['../**/*.stories.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions'],
+  framework: '@storybook/react',
+  staticDirs: ['../public'],
+  core: {
+    builder: 'webpack5',
+  },
+  // features: {
+  //   emotionAlias: false,
+  // },
   refs: {
-    "@chakra-ui/react": {
+    '@chakra-ui/react': {
       disable: true,
     },
   },

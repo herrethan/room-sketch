@@ -1,7 +1,8 @@
-import { Button } from "@chakra-ui/button";
-import { Heading, Text } from "@chakra-ui/layout";
+import { Button } from '@chakra-ui/button';
+import { Heading, Text } from '@chakra-ui/layout';
+import theme from '~/theme';
 
-
+console.log(theme.borders);
 export default function Canvas() {
   return (
     <div>
