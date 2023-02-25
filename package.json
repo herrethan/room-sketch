@@ -10,9 +10,10 @@
     "gen:theme-typings": "chakra-cli tokens app/theme/index.ts",
     "typecheck": "tsc",
     "storybook": "export NODE_OPTIONS=--openssl-legacy-provider && start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
-  "lint-staged" : {
+  "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "yarn run lint --fix",
       "yarn run pretty --staged"
@@ -55,7 +56,8 @@
     "lint-staged": "^13.1.2",
     "prettier": "^2.8.4",
     "pretty-quick": "^3.1.3",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "husky": "^8.0.0"
   },
   "engines": {
     "node": ">=14"
