@@ -6,7 +6,9 @@
     "dev": "yarn gen:theme-typings && remix dev",
     "start": "remix-serve build",
     "gen:theme-typings": "chakra-cli tokens app/theme/index.ts",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "storybook": "export NODE_OPTIONS=--openssl-legacy-provider && start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.1",
@@ -23,12 +25,23 @@
     "react-icons": "^4.7.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.0",
     "@chakra-ui/cli": "^2.3.0",
     "@remix-run/dev": "^1.13.0",
     "@remix-run/eslint-config": "^1.13.0",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack4": "^6.5.16",
+    "@storybook/manager-webpack4": "^6.5.16",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "babel-loader": "^8.3.0",
     "eslint": "^8.27.0",
+    "eslint-plugin-storybook": "^0.6.11",
     "typescript": "^4.8.4"
   },
   "engines": {
