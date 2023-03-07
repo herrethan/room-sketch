@@ -7,7 +7,7 @@ const globalStyles: Styles = {
       // bg: 'grey.lightest',
       // color: 'grey.darkest',
       // fontFamily: 'body',
-      overflowX: 'hidden',
+      // overflowX: 'hidden',
       transitionDuration: 'normal',
       transitionProperty: 'background-color',
       _dark: {
