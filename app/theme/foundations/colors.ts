@@ -1,5 +1,31 @@
 import type { ThemeOverride } from '@chakra-ui/react';
 
+// brand peach: #FFB387
+
+// --peach: #f1bf98;
+// --nyanza: #e1f4cb;
+// --sage: #bacba9;
+// --dim-gray: #717568;
+// --black-olive: #3f4739;
+
+// --bittersweet: #ed6a5a;
+// --lemon-chiffon: #f4f1bb;
+// --ash-gray: #9bc1bc;
+// --wenge: #5d576b;
+// --alabaster: #e6ebe0;
+
+// alt brand:
+// #fff8f4
+// #ffe9de
+// #ffd9c5
+// #ffc7a9
+// #ffb289
+// #eaa37c
+// #d1916f
+// #b37d5f
+// #8e624b
+// #533a2c
+
 const colors: ThemeOverride['colors'] = {
   transparent: 'transparent',
   current: 'currentColor',

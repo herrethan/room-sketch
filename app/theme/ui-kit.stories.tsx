@@ -1,7 +1,6 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import UIKit from './ui-kit';
-// import { Button } from "@chakra-ui/react";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

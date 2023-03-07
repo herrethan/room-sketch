@@ -16,7 +16,13 @@ import {
   Checkbox,
   RadioGroup,
   Stack,
+  Text,
   Radio,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverCloseButton,
+  PopoverBody,
 } from '@chakra-ui/react';
 
 const UIKit = () => {
@@ -35,6 +41,9 @@ const UIKit = () => {
         <Heading size="lg">Heading lg</Heading>
         <Heading size="md">Heading md</Heading>
         <Heading size="sm">Heading sm</Heading>
+        <Heading size="xs" textTransform="uppercase">
+          Upper case text
+        </Heading>
       </Flex>
       <Flex direction="column" gap="4">
         <Box>
@@ -67,7 +76,20 @@ const UIKit = () => {
           <Switch id="email-alerts" />
         </FormControl>
       </Flex>
-      <GridItem></GridItem>
+      <GridItem>
+        <Popover>
+          <PopoverTrigger>
+            <Button colorScheme="gray">Trigger a milkshake</Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverCloseButton />
+            {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
+            <PopoverBody>
+              <Text>Are you sure you want to have that milkshake?</Text>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </GridItem>
       <GridItem></GridItem>
       <GridItem></GridItem>
       <GridItem></GridItem>

@@ -4,14 +4,14 @@ const globalStyles: Styles = {
   global: {
     body: {
       // apply: 'textStyles.body1',
-      bg: 'grey.lightest',
-      color: 'grey.darkest',
+      // bg: 'grey.lightest',
+      // color: 'grey.darkest',
       // fontFamily: 'body',
       overflowX: 'hidden',
       transitionDuration: 'normal',
       transitionProperty: 'background-color',
       _dark: {
-        bg: 'grey.darkest',
+        // bg: 'grey.darkest',
         color: 'white',
       },
     },
