@@ -24,4 +24,7 @@ const overrides = {
   },
 };
 
-export default extendTheme(overrides, withDefaultColorScheme({ colorScheme: 'brand' })) as Theme;
+export default extendTheme(
+  overrides,
+  withDefaultColorScheme({ colorScheme: 'brand' })
+) as Theme;

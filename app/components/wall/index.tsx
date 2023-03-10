@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
-import { computeWall, WallPosition } from './styles';
+import { computeWall } from './styles';
+import type { WallPosition } from '~/data/walls';
 
 // .bk -> .bottom
 // .ft -> .top

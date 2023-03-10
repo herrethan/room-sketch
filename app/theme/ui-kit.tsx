@@ -62,7 +62,13 @@ const UIKit = () => {
           <FormLabel htmlFor="slider-1" flexShrink="0" mb="0">
             Slide me
           </FormLabel>
-          <Slider id="slider-1" aria-label="slider-1" defaultValue={10} min={0} max={20}>
+          <Slider
+            id="slider-1"
+            aria-label="slider-1"
+            defaultValue={10}
+            min={0}
+            max={20}
+          >
             <SliderTrack>
               <SliderFilledTrack />
             </SliderTrack>

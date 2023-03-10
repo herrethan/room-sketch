@@ -1,7 +1,11 @@
 import { checkboxAnatomy } from '@chakra-ui/anatomy';
-import { createMultiStyleConfigHelpers, theme as defaultTheme } from '@chakra-ui/react';
+import {
+  createMultiStyleConfigHelpers,
+  theme as defaultTheme,
+} from '@chakra-ui/react';
 
-const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(checkboxAnatomy.keys);
+const { definePartsStyle, defineMultiStyleConfig } =
+  createMultiStyleConfigHelpers(checkboxAnatomy.keys);
 
 const baseStyle = definePartsStyle({
   // container: {},

@@ -3,17 +3,11 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import Scene from '.';
 import RoomContainer from '../room-container';
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Scene/Background',
   component: Scene,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  // argTypes: {
-  //   rotateX: { control: "" },
-  // },
 } as ComponentMeta<typeof Scene>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Scene> = args => (
   <RoomContainer>
     <Scene {...args} />

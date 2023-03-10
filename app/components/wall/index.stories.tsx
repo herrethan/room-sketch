@@ -5,7 +5,7 @@ import Scene from '../scene';
 import RoomContainer from '../room-container';
 
 export default {
-  title: 'Wall/Single',
+  title: 'Walls/Single',
   component: Wall,
 } as ComponentMeta<typeof Wall>;
 

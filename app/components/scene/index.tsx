@@ -3,7 +3,7 @@ import type { SystemStyleObject } from '@chakra-ui/react';
 import { Flex, Box, Text } from '@chakra-ui/react';
 import theme from '~/theme';
 
-const SCENE_SIZE = 81;
+const SCENE_SIZE = 33;
 
 const gridStyles: SystemStyleObject = {
   position: 'absolute',
@@ -47,7 +47,14 @@ const dotStyles = {
 const OriginDot = () => {
   return (
     <Box sx={dotStyles}>
-      <Text fontSize="small" color="gray.500" position="absolute" top="100%" left="0" whiteSpace="nowrap">
+      <Text
+        fontSize="small"
+        color="gray.500"
+        position="absolute"
+        top="100%"
+        left="0"
+        whiteSpace="nowrap"
+      >
         (0, 0)
       </Text>
     </Box>
@@ -56,7 +63,14 @@ const OriginDot = () => {
 
 const originMargin = SCENE_SIZE % 2 === 0 ? `-1em 0 0 -1em` : 0;
 
-const Scene = ({ zoom = 1, showOrigin, rotateX = 0, rotateY = 0, rotateZ = 0, children }: SceneProps) => {
+const Scene = ({
+  zoom = 1,
+  showOrigin,
+  rotateX = 0,
+  rotateY = 0,
+  rotateZ = 0,
+  children,
+}: SceneProps) => {
   const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
 
   const centered = React.useCallback((node: HTMLDivElement) => {
@@ -68,7 +82,14 @@ const Scene = ({ zoom = 1, showOrigin, rotateX = 0, rotateY = 0, rotateZ = 0, ch
   return (
     <Flex fontSize={`${zoom}em`}>
       <Flex backgroundColor="paper" sx={{ ...gridStyles, transform }}>
-        <Box ref={centered} className="preserved" w="0" h="0" position="relative" m={originMargin}>
+        <Box
+          ref={centered}
+          className="preserved"
+          w="0"
+          h="0"
+          position="relative"
+          m={originMargin}
+        >
           {showOrigin && <OriginDot />}
           {children}
         </Box>

@@ -1,19 +1,16 @@
 import type { SystemStyleObject } from '@chakra-ui/react';
 import isEqual from 'lodash/isEqual';
-
-// [[left, bottom], [left, bottom]]
-export type WallPosition = [[number, number], [number, number]];
-
-export const WALL_THICKNESS = 0.5;
-export const WALL_HEIGHT = 8;
+import type { WallPosition } from '~/data/walls';
+import { WALL_HEIGHT, WALL_THICKNESS } from './utils';
 
 const wallStyles: SystemStyleObject = {
   position: 'absolute',
   top: `-${WALL_THICKNESS / 2}em`,
+  left: `-${WALL_THICKNESS / 2}em`,
   // top: 0,
-  left: 0,
+  // left: 0,
   transformStyle: 'preserve-3d',
-  transformOrigin: 'center left',
+  transformOrigin: `${WALL_THICKNESS / 2}em ${WALL_THICKNESS / 2}em`,
   opacity: 1,
   // transform: `translate3D(0em, 0em, 0em) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`,
   // width: `5em`,
@@ -85,13 +82,19 @@ export const computeWall = (position: WallPosition): SystemStyleObject => {
     x: pos[1][0],
     y: pos[1][1],
   };
-  const length = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
-  const rotation = (Math.atan2(end.y - start.y, end.x - start.x) * 180) / Math.PI;
+  const length =
+    Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)) +
+    WALL_THICKNESS;
+
+  const rotation =
+    Math.atan2(end.y - start.y, end.x - start.x) * (180 / Math.PI);
 
   return {
     ...wallStyles,
     width: `${length}em`,
-    transform: `translate3D(${start.x}em, ${start.y * -1}em, 0) rotateZ(${rotation * -1}deg)`,
+    transform: `translate3D(${start.x}em, ${start.y * -1}em, 0) rotateZ(${
+      rotation * -1
+    }deg)`,
     '& .front, & .back': {
       width: `${length}em`,
       height: `${WALL_HEIGHT}em`,
