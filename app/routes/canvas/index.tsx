@@ -1,12 +1,38 @@
-import { Button } from '@chakra-ui/button';
-import { Heading, Text } from '@chakra-ui/layout';
+import Editor from '~/components/editor';
+import { EditorProvider } from '~/components/editor/provider';
+import type { Wall } from '~/data/walls';
+
+const someWalls: Wall[] = [
+  {
+    position: [
+      [-5, -3],
+      [-5, 3],
+    ],
+  },
+  {
+    position: [
+      [-5, 3],
+      [5, 3],
+    ],
+  },
+  {
+    position: [
+      [5, 3],
+      [5, -3],
+    ],
+  },
+  {
+    position: [
+      [5, -3],
+      [-5, -3],
+    ],
+  },
+];
 
 export default function Canvas() {
   return (
-    <div>
-      <Heading>I'm Dink</Heading>
-      <Text>I'm some text</Text>
-      <Button>And I'm a pickin</Button>
-    </div>
+    <EditorProvider defaultWalls={someWalls}>
+      <Editor />
+    </EditorProvider>
   );
 }

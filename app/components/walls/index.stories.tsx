@@ -51,7 +51,6 @@ const sampleCornerWalls: WallsProps['walls'] = [
   { position: [[4, 2], [4, -3]] },
   { position: [[4, 2], [4, 4]] },
   { position: [[4, -3], [0, -3]] },
-  { position: [[-4, -3], [-3, 3]] },
 ];
 
 const CornersTemplate: ComponentStory<typeof Scene> = args => (

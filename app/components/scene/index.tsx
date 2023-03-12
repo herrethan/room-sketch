@@ -3,7 +3,7 @@ import type { SystemStyleObject } from '@chakra-ui/react';
 import { Flex, Box, Text } from '@chakra-ui/react';
 import theme from '~/theme';
 
-const SCENE_SIZE = 33;
+const SCENE_SIZE = 80;
 
 const gridStyles: SystemStyleObject = {
   position: 'absolute',
@@ -11,8 +11,6 @@ const gridStyles: SystemStyleObject = {
   width: `${SCENE_SIZE}em`,
   alignItems: 'center',
   justifyContent: 'center',
-  top: '50%',
-  left: '50%',
   transformStyle: 'preserve-3d',
   transition: `transform ${theme.transition.duration.normal} ${theme.transition.easing['ease-in-out']}`,
   backgroundImage: `linear-gradient(${theme.colors.gray[200]} 1px, transparent 1px),
@@ -73,11 +71,14 @@ const Scene = ({
 }: SceneProps) => {
   const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
 
-  const centered = React.useCallback((node: HTMLDivElement) => {
-    if (node) {
-      node.scrollIntoView({ block: 'center', inline: 'center' });
-    }
-  }, []);
+  const centered = React.useCallback(
+    (node: HTMLDivElement) => {
+      if (node) {
+        node.scrollIntoView({ block: 'center', inline: 'center' });
+      }
+    },
+    [zoom]
+  );
 
   return (
     <Flex fontSize={`${zoom}em`}>
