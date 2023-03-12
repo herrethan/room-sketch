@@ -9,31 +9,12 @@ export default {
   component: Editor,
 } as ComponentMeta<typeof Editor>;
 
+// prettier-ignore
 const someWalls: Wall[] = [
-  {
-    position: [
-      [-5, -3],
-      [-5, 3],
-    ],
-  },
-  {
-    position: [
-      [-5, 3],
-      [5, 3],
-    ],
-  },
-  {
-    position: [
-      [5, 3],
-      [5, -3],
-    ],
-  },
-  {
-    position: [
-      [5, -3],
-      [-5, -3],
-    ],
-  },
+  { position: [[-5, -3], [-5, 3]] },
+  { position: [[-5, 3], [5, 3]] },
+  { position: [[5, 3], [5, -3]] },
+  { position: [[5, -3], [-5, -3]] },
 ];
 
 const Template: ComponentStory<typeof Editor> = args => (

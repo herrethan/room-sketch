@@ -1,32 +1,13 @@
 import React from 'react';
-import type { Wall, WallPosition } from '~/data/walls';
+import type { Wall } from '~/data/walls';
 import { reducer } from './reducer';
 
+// prettier-ignore
 const DEFAULT_WALLS: Wall[] = [
-  {
-    position: [
-      [-5, -5],
-      [-5, 5],
-    ],
-  },
-  {
-    position: [
-      [-5, 5],
-      [5, 5],
-    ],
-  },
-  {
-    position: [
-      [5, 5],
-      [5, -5],
-    ],
-  },
-  {
-    position: [
-      [5, -5],
-      [-5, -5],
-    ],
-  },
+  { position: [[-5, -5], [-5, 5]] },
+  { position: [[-5, 5], [5, 5]] },
+  { position: [[5, 5], [5, -5]] },
+  { position: [[5, -5], [-5, -5]] },
 ];
 
 export enum EditMode {
