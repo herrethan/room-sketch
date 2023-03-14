@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, FormControl, FormLabel, IconButton } from '@chakra-ui/react';
+import { Flex, Text, IconButton } from '@chakra-ui/react';
 import {
   EditorAction,
   useEditorDispatch,
@@ -26,31 +26,31 @@ const RotateControl = () => {
   };
 
   return (
-    <FormControl display="flex" alignItems="center">
-      <FormLabel flexShrink="0" mb="0">
+    <Flex alignItems="center">
+      <Text as="label" flexShrink="0" mb="0">
         Rotate
-      </FormLabel>
+      </Text>
       <Flex>
         <IconButton
           onClick={() => onRotate('left')}
-          colorScheme="green"
+          colorScheme="teal"
           variant="outline"
           fontSize="lg"
           size="sm"
-          aria-label="asdf"
+          aria-label="rotate left"
           icon={<MdRotateRight />}
         ></IconButton>
         <IconButton
           onClick={() => onRotate('right')}
-          colorScheme="green"
+          colorScheme="teal"
           variant="outline"
           fontSize="lg"
           size="sm"
-          aria-label="asdf"
+          aria-label="rotate right"
           icon={<MdRotateLeft />}
         ></IconButton>
       </Flex>
-    </FormControl>
+    </Flex>
   );
 };
 

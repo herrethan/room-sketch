@@ -44,6 +44,18 @@ const colors: ThemeOverride['colors'] = {
     900: '#bb4d00',
   },
   green: {
+    50: '#f3fbea',
+    100: '#e1f4cb',
+    200: '#ceedab',
+    300: '#bae58b',
+    400: '#aade70',
+    500: '#9cd758',
+    600: '#8cc64f',
+    700: '#77b144',
+    800: '#639d3b',
+    900: '#407a2a',
+  },
+  teal: {
     50: '#e2eadc',
     100: '#bacba9',
     200: '#8ea973',

@@ -71,7 +71,7 @@ export const EditorProvider = ({
 }: EditorProviderProps) => {
   const [state, dispatch] = React.useReducer(reducer, {
     walls: defaultWalls,
-    editMode: null,
+    editMode: EditMode.wall,
     zoom: 1,
     rotateX: 0,
     rotateZ: 0,

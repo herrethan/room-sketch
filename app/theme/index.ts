@@ -4,6 +4,7 @@ import styles from './styles';
 import colors from './foundations/colors';
 import fonts from './foundations/fonts';
 import { checkboxTheme } from './components/checkbox';
+import textTheme from './components/text';
 
 const fontWeights: ThemeOverride['fontWeights'] = {
   book: 200,
@@ -20,6 +21,7 @@ const overrides = {
   // other foundational style overrides go here
   components: {
     Checkbox: checkboxTheme,
+    Text: textTheme,
     // other components go here
   },
 };

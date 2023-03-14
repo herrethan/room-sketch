@@ -18,7 +18,7 @@ const ZoomControl = () => {
   const dispatch = useEditorDispatch();
 
   return (
-    <FormControl display="flex" alignItems="center">
+    <FormControl display="flex" alignItems="center" id="zoom-slider-control">
       <FormLabel htmlFor="zoom-slider" flexShrink="0" mb="0">
         Zoom
       </FormLabel>
@@ -26,7 +26,7 @@ const ZoomControl = () => {
         id="zoom-slider"
         aria-label="zoom-slider"
         defaultValue={zoom}
-        colorScheme="green"
+        colorScheme="teal"
         onChange={zoom =>
           dispatch({ type: EditorAction.zoom, payload: { zoom } })
         }

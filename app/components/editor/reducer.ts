@@ -8,6 +8,8 @@ export const reducer = (state: EditorState, action: EditorActions) => {
       return { ...state, ...action.payload };
     case EditorAction.recreate:
       return { ...state, walls: action.payload };
+    case EditorAction.mode:
+      return { ...state, editMode: action.payload };
     default:
       return state;
   }

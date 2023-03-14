@@ -1,14 +1,19 @@
 import React from 'react';
-import { EditorAction, useEditorDispatch, useEditorState } from './provider';
+import {
+  EditMode,
+  EditorAction,
+  useEditorDispatch,
+  useEditorState,
+} from './provider';
 import Scene from '../scene';
 import Walls from '../walls';
-import RoomContainer from '../room-container';
 import { Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
 import ZoomControl from '../zoom-control';
 import RotateControl from '../rotate-control';
+import WallsEditor from '../walls-editor';
 
 const Editor = () => {
-  const { zoom, walls, rotateX, rotateZ } = useEditorState();
+  const { zoom, walls, rotateX, rotateZ, editMode } = useEditorState();
   const dispatch = useEditorDispatch();
 
   const onSwitch = () => {
@@ -22,9 +27,10 @@ const Editor = () => {
   };
 
   return (
-    <RoomContainer>
+    <>
       <Scene zoom={zoom} rotateX={rotateX} rotateZ={rotateZ}>
-        <Walls walls={walls} />
+        {editMode === null && <Walls walls={walls} />}
+        {editMode === EditMode.wall && <WallsEditor walls={walls} />}
       </Scene>
       <Flex
         direction="column"
@@ -34,21 +40,21 @@ const Editor = () => {
         right="4"
         width="32"
       >
-        <FormControl display="flex" alignItems="center">
+        <FormControl display="flex" alignItems="center" id="switch-3d-control">
           <FormLabel htmlFor="switch-3d" mb="0">
             45˚ view
           </FormLabel>
           <Switch
             isChecked={rotateX === 45}
             onChange={onSwitch}
-            colorScheme="green"
+            colorScheme="teal"
             id="switch-3d"
           />
         </FormControl>
         <ZoomControl />
         <RotateControl />
       </Flex>
-    </RoomContainer>
+    </>
   );
 };
 

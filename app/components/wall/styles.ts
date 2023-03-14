@@ -1,7 +1,7 @@
 import type { SystemStyleObject } from '@chakra-ui/react';
 import isEqual from 'lodash/isEqual';
 import type { WallPosition } from '~/data/walls';
-import { WALL_HEIGHT, WALL_THICKNESS } from './utils';
+import { WALL_HEIGHT, WALL_THICKNESS } from '../walls/utils';
 
 const wallStyles: SystemStyleObject = {
   position: 'absolute',

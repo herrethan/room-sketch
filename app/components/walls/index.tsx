@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Wall as WallType } from '~/data/walls';
-import { prettifyButts } from '../wall/utils';
+import { areAllWallsSquare, prettifyButts } from './utils';
 import Wall from '../wall';
 
 export interface WallsProps {
@@ -10,7 +10,7 @@ export interface WallsProps {
 const Walls = ({ walls }: WallsProps) => {
   let theWalls: WallType[] = walls;
 
-  if (walls.length > 1) {
+  if (walls.length > 1 && !areAllWallsSquare(walls)) {
     theWalls = prettifyButts(walls);
   }
 

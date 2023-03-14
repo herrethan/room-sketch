@@ -7,6 +7,25 @@ export const GOLDEN_RATIO = 1.61803398875;
 // TODO: maths homework: figure out why this just "works"!
 export const MAGIC_RATIO = GOLDEN_RATIO * 3;
 
+export const isWallSquare = (position: Wall['position']) =>
+  position[0][0] === position[1][0] || position[0][1] === position[1][1];
+
+export const areAllWallsSquare = (walls: Wall[]) =>
+  walls.every(({ position }) => isWallSquare(position));
+
+export const wallsSharingVertices = (
+  position: Wall['position'],
+  walls: Wall[]
+) => {
+  return walls.filter(
+    wall =>
+      !isEqual(wall.position, position) &&
+      wall.position.some(
+        p => isEqual(p, position[0]) || isEqual(p, position[1])
+      )
+  );
+};
+
 // computes angle in degrees given 3 points
 export const computeTheta = (
   p1: [number, number],
@@ -48,13 +67,7 @@ export const prettifyButts = (walls: Wall[]) => {
 
   walls.forEach(({ position }) => {
     // find all wall companions who share this walls coordinates
-    const pals = walls.filter(
-      wall =>
-        !isEqual(wall.position, position) &&
-        wall.position.some(
-          p => isEqual(p, position[0]) || isEqual(p, position[1])
-        )
-    );
+    const pals = wallsSharingVertices(position, walls);
 
     if (pals.length === 0) {
       return newWalls.push({ position });
@@ -81,7 +94,7 @@ export const prettifyButts = (walls: Wall[]) => {
           const i = position.findIndex(p => isEqual(p, joint)) === 1 ? 1 : 0;
           let nudgeDistance: number;
           if (slope > 0 && slope < Infinity) {
-            // no idea why this magic ratio perfectly aligns angled butts, but it is
+            // no idea why this magic ratio perfectly aligns angled butts, but it does
             nudgeDistance =
               (WALL_THICKNESS / MAGIC_RATIO) *
               Math.abs(Math.sin((2 * theta * Math.PI) / 180));

@@ -1,7 +1,12 @@
 import type { Styles } from '@chakra-ui/theme-tools';
 
+export const PX_PER_EM = 16;
+
 const globalStyles: Styles = {
   global: {
+    html: {
+      fontSize: PX_PER_EM,
+    },
     body: {
       // apply: 'textStyles.body1',
       // bg: 'grey.lightest',

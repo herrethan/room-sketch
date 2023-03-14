@@ -3,7 +3,7 @@ import type { SystemStyleObject } from '@chakra-ui/react';
 import { Flex, Box, Text } from '@chakra-ui/react';
 import theme from '~/theme';
 
-const SCENE_SIZE = 80;
+const SCENE_SIZE = 100;
 
 const gridStyles: SystemStyleObject = {
   position: 'absolute',
@@ -81,7 +81,7 @@ const Scene = ({
   );
 
   return (
-    <Flex fontSize={`${zoom}em`}>
+    <Flex fontSize={`${zoom}em`} position="relative" height="100%">
       <Flex backgroundColor="paper" sx={{ ...gridStyles, transform }}>
         <Box
           ref={centered}
