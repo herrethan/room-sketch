@@ -11,6 +11,7 @@ import { Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
 import ZoomControl from '../zoom-control';
 import RotateControl from '../rotate-control';
 import WallsEditor from '../walls-editor';
+import type { Wall } from '~/data/walls';
 
 const Editor = () => {
   const { zoom, walls, rotateX, rotateZ, editMode } = useEditorState();
@@ -26,11 +27,20 @@ const Editor = () => {
     });
   };
 
+  const onCommitEdit = (newWalls: Wall[]) => {
+    dispatch({
+      type: EditorAction.recreate,
+      payload: newWalls,
+    });
+  };
+
   return (
     <>
       <Scene zoom={zoom} rotateX={rotateX} rotateZ={rotateZ}>
         {editMode === null && <Walls walls={walls} />}
-        {editMode === EditMode.wall && <WallsEditor walls={walls} />}
+        {editMode === EditMode.wall && (
+          <WallsEditor walls={walls} onCommit={onCommitEdit} />
+        )}
       </Scene>
       <Flex
         direction="column"

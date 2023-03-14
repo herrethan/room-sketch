@@ -8,15 +8,16 @@ import { allSharedCornersAreSquare } from './utils';
 
 export interface WallsProps {
   walls: Wall[];
+  onCommit: (walls: Wall[]) => void;
 }
 
 interface WallEditState {
   walls: Wall[];
   selectedWall: number | null;
-  // history:
+  // history?: // TODO: for managing undos
 }
 
-const WallsEditor = ({ walls }: WallsProps) => {
+const WallsEditor = ({ walls, onCommit }: WallsProps) => {
   const [state, dispatch] = React.useReducer(
     (state: WallEditState, action: Partial<WallEditState>) => {
       return { ...state, ...action };
@@ -28,7 +29,10 @@ const WallsEditor = ({ walls }: WallsProps) => {
 
   useOutsideClick({
     ref: svgRef as React.RefObject<HTMLElement>,
-    handler: () => dispatch({ selectedWall: null }),
+    handler: () => {
+      onCommit(state.walls);
+      dispatch({ selectedWall: null });
+    },
   });
 
   const selectedPosition =
