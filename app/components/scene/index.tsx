@@ -36,30 +36,27 @@ export interface SceneProps {
   children?: React.ReactNode;
 }
 
-const dotStyles = {
-  position: 'absolute',
-  width: '0.5rem',
-  height: '0.5rem',
-  top: '-0.25rem',
-  left: '-0.25rem',
-  borderRadius: '50%',
-  backgroundColor: 'gray.500',
-  scrollSnapAlign: 'right',
+const crossHairStyles = {
+  '& svg': {
+    width: '1px',
+    height: '1px',
+    overflow: 'visible',
+    position: 'relative',
+    top: '-0.5px',
+    left: '-0.5px',
+    '& line': {
+      stroke: 'gray.100',
+    },
+  },
 };
 
-const OriginDot = () => {
+const Center = () => {
   return (
-    <Box sx={dotStyles}>
-      <Text
-        fontSize="small"
-        color="gray.500"
-        position="absolute"
-        top="100%"
-        left="0"
-        whiteSpace="nowrap"
-      >
-        (0, 0)
-      </Text>
+    <Box sx={crossHairStyles}>
+      <svg>
+        <line x1={0} y1={'0.25em'} x2={0} y2={'-0.25em'} />
+        <line x1={'0.25em'} y1={0} x2={'-0.25em'} y2={0} />
+      </svg>
     </Box>
   );
 };
@@ -112,7 +109,7 @@ const Scene = ({
             h="0"
             m={originMargin}
           >
-            {showOrigin && <OriginDot />}
+            {showOrigin && <Center />}
             {children}
           </Box>
         </Flex>

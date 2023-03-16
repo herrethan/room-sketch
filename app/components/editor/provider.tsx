@@ -1,5 +1,8 @@
 import React from 'react';
 import type { Wall } from '~/data/walls';
+import { PX_PER_EM } from '~/theme/styles';
+import { SCENE_SIZE } from '../scene';
+import { toNearestEM } from '../walls-editor/utils';
 import { reducer } from './reducer';
 
 // prettier-ignore
@@ -98,4 +101,26 @@ export const useEditorDispatch = () => {
     throw new Error('useEditorDispatch must be used within an EditorContext');
   }
   return dispatch;
+};
+
+export const useEditorComputeCoordinates = () => {
+  const { zoom } = useEditorState();
+  if (!zoom) {
+    throw new Error(
+      'useEditorComputeCoordinates must be used within an EditorContext'
+    );
+  }
+  // derives scene coordinates (ems) from mouse event offsetX offsetY (pixels)
+  const mouseCoordsToSceneCoords = React.useCallback(
+    (x: number, y: number): [number, number] => {
+      const offset = SCENE_SIZE % 2 === 0 ? PX_PER_EM / 2 : 0;
+      return [
+        toNearestEM(x / zoom - (SCENE_SIZE * PX_PER_EM) / 2 + offset),
+        toNearestEM(y / zoom - (SCENE_SIZE * PX_PER_EM) / 2 + offset) * -1,
+      ];
+    },
+    [zoom]
+  );
+
+  return mouseCoordsToSceneCoords;
 };
