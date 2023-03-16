@@ -1,24 +1,15 @@
 import isEqual from 'lodash/isEqual';
 import React from 'react';
 import type { Wall } from '~/data/walls';
-import { PX_PER_EM } from '~/theme/styles';
-import { SCENE_SIZE } from '../scene';
+import { useEditorComputeCoordinates } from '../editor/provider';
 import { useSceneEvent } from '../scene/provider';
-import { isAllowedAngle, toNearestEM } from './utils';
+import { isAllowedAngle } from './utils';
 
 interface WallCreateProps {
   onCreated: (newPosition: Wall['position']) => void;
 }
 
 type Position = [number, number];
-
-const toScenePosition = (x: number, y: number): [number, number] => {
-  const offset = SCENE_SIZE % 2 === 0 ? PX_PER_EM / 2 : 0;
-  return [
-    toNearestEM(x - (SCENE_SIZE * PX_PER_EM) / 2 + offset),
-    toNearestEM(y - (SCENE_SIZE * PX_PER_EM) / 2 + offset) * -1,
-  ];
-};
 
 interface WallCreateState {
   mousePosition?: Position;
@@ -29,7 +20,7 @@ interface WallCreateState {
 
 type OnMouseEvent = {
   type: keyof Pick<DocumentEventMap, 'mousedown' | 'mouseup' | 'mousemove'>;
-  e: MouseEvent;
+  position: Position;
 };
 
 type WallCreateAction = OnMouseEvent;
@@ -44,9 +35,8 @@ const reducer = (
   state: WallCreateState,
   action: WallCreateAction
 ): WallCreateState => {
-  const position = toScenePosition(action.e.offsetX, action.e.offsetY);
-
-  switch (action.type) {
+  const { position, type } = action;
+  switch (type) {
     case 'mousedown':
       if (!state.isDrawing) {
         return { ...state, startVertex: position };
@@ -81,12 +71,25 @@ const reducer = (
 };
 
 const WallCreate = ({ onCreated }: WallCreateProps) => {
+  const toScenePosition = useEditorComputeCoordinates();
   const [state, dispatch] = React.useReducer(reducer, defaultState);
 
   useSceneEvent({
-    onMouseDown: e => dispatch({ type: 'mousedown', e }),
-    onMouseMove: e => dispatch({ type: 'mousemove', e }),
-    onMouseUp: e => dispatch({ type: 'mouseup', e }),
+    onMouseDown: e =>
+      dispatch({
+        type: 'mousedown',
+        position: toScenePosition(e.offsetX, e.offsetY),
+      }),
+    onMouseMove: e =>
+      dispatch({
+        type: 'mousemove',
+        position: toScenePosition(e.offsetX, e.offsetY),
+      }),
+    onMouseUp: e =>
+      dispatch({
+        type: 'mouseup',
+        position: toScenePosition(e.offsetX, e.offsetY),
+      }),
   });
 
   React.useEffect(() => {

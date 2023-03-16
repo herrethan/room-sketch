@@ -16,6 +16,9 @@ export const isAllowedAngle = (p: Wall['position']) => {
   return Math.abs(degree % SMALLEST_ALLOWED_ANGLE) === 0;
 };
 
+// TODO:
+// export const toBestAllowedAngle = (p: Wall['position']) => {};
+
 export const allSharedCornersAreSquare = (
   p: Wall['position'],
   walls: Wall[]
