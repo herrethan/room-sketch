@@ -2,7 +2,7 @@ import React from 'react';
 import type { Wall } from '~/data/walls';
 import { isAllowedAngle, toNearestEM } from './utils';
 
-export interface WallMutateProps {
+interface WallMutateProps {
   position: Wall['position'];
   hasSquareEdges: boolean;
   onChange: (newPosition: Wall['position'], constrained?: boolean) => void;
@@ -67,7 +67,6 @@ const WallMutate = ({
     e: React.MouseEvent<SVGLineElement | SVGCircleElement>
   ) => {
     if (hasDragged.current === true) {
-      console.log('end');
       setDragOrigin(null);
       hasDragged.current = false;
     }
@@ -78,8 +77,6 @@ const WallMutate = ({
       x: toNearestEM((origin.pageX - current.pageX) * -1),
       y: toNearestEM(origin.pageY - current.pageY),
     };
-
-    if (delta.x === 0 && delta.y === 0) return;
 
     switch (origin.type) {
       // only allow vertical or horizontal dragging of a line
@@ -102,6 +99,7 @@ const WallMutate = ({
           );
         }
         break;
+      // allow willy-nilly dragging of vertices, constrained to allowed angles
       case DragType.vertex0:
         const new0: Wall['position'] = [
           [position[0][0] + delta.x, position[0][1] + delta.y],
@@ -123,31 +121,33 @@ const WallMutate = ({
 
   React.useEffect(() => {
     if (dragOrigin) {
-      console.log('add listener');
       const whileDragging = (e: MouseEvent) => {
         hasDragged.current = true;
         computeNewLine(dragOrigin, e);
       };
       document.addEventListener('mousemove', whileDragging);
       return () => {
-        console.log('remove listener');
         document.removeEventListener('mousemove', whileDragging);
       };
     }
+    // TODO: tread carefully in memoizing computeNewLine if necessary
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dragOrigin]);
 
   return (
     <>
-      <line
-        onMouseDown={e => onDragStart(e, DragType.line)}
-        onMouseUp={onDragEnd}
-        className="selected hit-area"
-        x1={`${position[0][0]}em`}
-        y1={`${position[0][1] * -1}em`}
-        x2={`${position[1][0]}em`}
-        y2={`${position[1][1] * -1}em`}
-        style={{ cursor }}
-      />
+      {!dragOrigin && (
+        <line
+          onMouseDown={e => onDragStart(e, DragType.line)}
+          onMouseUp={onDragEnd}
+          className="selected hit-area"
+          x1={`${position[0][0]}em`}
+          y1={`${position[0][1] * -1}em`}
+          x2={`${position[1][0]}em`}
+          y2={`${position[1][1] * -1}em`}
+          style={{ cursor }}
+        />
+      )}
       <line
         className="selected"
         x1={`${position[0][0]}em`}
@@ -155,9 +155,20 @@ const WallMutate = ({
         x2={`${position[1][0]}em`}
         y2={`${position[1][1] * -1}em`}
       />
+      {dragOrigin && (
+        <circle
+          className="ghost-dragging"
+          cx={`${position[dragOrigin.type === DragType.vertex0 ? 0 : 1][0]}em`}
+          cy={`${
+            position[dragOrigin.type === DragType.vertex0 ? 0 : 1][1] * -1
+          }em`}
+          r={'0.75em'}
+        />
+      )}
       <circle
         onMouseDown={e => onDragStart(e, DragType.vertex0)}
         onMouseUp={onDragEnd}
+        className={dragOrigin ? 'start-vertex' : ''}
         cx={`${position[0][0]}em`}
         cy={`${position[0][1] * -1}em`}
         r={2}
@@ -165,6 +176,7 @@ const WallMutate = ({
       <circle
         onMouseDown={e => onDragStart(e, DragType.vertex1)}
         onMouseUp={onDragEnd}
+        className={dragOrigin ? 'end-vertex' : ''}
         cx={`${position[1][0]}em`}
         cy={`${position[1][1] * -1}em`}
         r={2}

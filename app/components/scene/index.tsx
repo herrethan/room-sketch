@@ -2,8 +2,13 @@ import React from 'react';
 import type { SystemStyleObject } from '@chakra-ui/react';
 import { Flex, Box, Text } from '@chakra-ui/react';
 import theme from '~/theme';
+import { useScenePan } from './pan-provider';
+import { useDragToScroll } from '~/hooks/use-drag-to-scroll';
+import { SceneRefProvider } from './provider';
 
-const SCENE_SIZE = 100;
+export const SCENE_SIZE = 100;
+
+const originMargin = SCENE_SIZE % 2 === 0 ? `-1em 0 0 -1em` : 0;
 
 const gridStyles: SystemStyleObject = {
   position: 'absolute',
@@ -59,8 +64,6 @@ const OriginDot = () => {
   );
 };
 
-const originMargin = SCENE_SIZE % 2 === 0 ? `-1em 0 0 -1em` : 0;
-
 const Scene = ({
   zoom = 1,
   showOrigin,
@@ -69,6 +72,13 @@ const Scene = ({
   rotateZ = 0,
   children,
 }: SceneProps) => {
+  const [panMode] = useScenePan();
+  const containerRef = React.useRef(null);
+  const { isDragging } = useDragToScroll(
+    containerRef.current && panMode === 'on' ? containerRef : null
+  );
+  const cursor = panMode === 'on' ? (isDragging ? 'grabbing' : 'grab') : 'auto';
+  const userSelect = isDragging ? 'none' : 'auto';
   const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
 
   const centered = React.useCallback(
@@ -77,24 +87,36 @@ const Scene = ({
         node.scrollIntoView({ block: 'center', inline: 'center' });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [zoom]
   );
 
   return (
-    <Flex fontSize={`${zoom}em`} position="relative" height="100%">
-      <Flex backgroundColor="paper" sx={{ ...gridStyles, transform }}>
-        <Box
-          ref={centered}
-          className="preserved"
-          w="0"
-          h="0"
-          position="relative"
-          m={originMargin}
+    <Flex
+      ref={containerRef}
+      fontSize={`${zoom}em`}
+      position="relative"
+      height="100%"
+      overflow="hidden"
+    >
+      <SceneRefProvider sceneRef={containerRef}>
+        <Flex
+          backgroundColor="paper"
+          sx={{ ...gridStyles, transform, cursor, userSelect }}
         >
-          {showOrigin && <OriginDot />}
-          {children}
-        </Box>
-      </Flex>
+          <Box
+            ref={centered}
+            className="preserved"
+            position="relative"
+            w="0"
+            h="0"
+            m={originMargin}
+          >
+            {showOrigin && <OriginDot />}
+            {children}
+          </Box>
+        </Flex>
+      </SceneRefProvider>
     </Flex>
   );
 };

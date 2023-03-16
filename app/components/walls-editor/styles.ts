@@ -1,11 +1,26 @@
 import type { SystemStyleObject } from '@chakra-ui/react';
+import { keyframes } from '@chakra-ui/react';
+import theme from '~/theme';
 import { WALL_THICKNESS } from '../walls/utils';
+
+const helloDot = keyframes({
+  from: { strokeWidth: 0 },
+  to: { strokeWidth: `${WALL_THICKNESS / 2}em` },
+});
+
+const helloHoverDot = keyframes({
+  from: { strokeWidth: `${WALL_THICKNESS / 2}em` },
+  to: { strokeWidth: `${WALL_THICKNESS}em` },
+});
 
 export const wallEditStyles: SystemStyleObject = {
   '& svg': {
-    width: 1,
-    height: 1,
+    width: '1px',
+    height: '1px',
     overflow: 'visible',
+    position: 'relative',
+    top: '-0.5px',
+    left: '-0.5px',
     '& line': {
       fill: 'none',
       stroke: 'gray.400',
@@ -34,10 +49,26 @@ export const wallEditStyles: SystemStyleObject = {
     '& circle': {
       fill: 'gray.800',
       stroke: 'gray.800',
-      strokeWidth: `${WALL_THICKNESS / 2}em`,
       cursor: 'pointer',
+      animation: `${helloDot} ${theme.transition.duration.fast} forwards`,
       '&:hover': {
-        strokeWidth: `${WALL_THICKNESS}em`,
+        animation: `${helloHoverDot} ${theme.transition.duration.fast} forwards`,
+      },
+      '&.ghost': {
+        fill: 'blackAlpha.200',
+        stroke: 'none',
+        pointerEvents: 'none',
+      },
+      '&.ghost-dragging': {
+        fill: 'blackAlpha.200',
+        stroke: 'none',
+        pointerEvents: 'none',
+      },
+      '&.start-vertex': {
+        pointerEvents: 'none',
+      },
+      '&.end-vertex': {
+        pointerEvents: 'none',
       },
     },
   },

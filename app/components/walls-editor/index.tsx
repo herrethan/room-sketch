@@ -5,6 +5,8 @@ import type { Wall } from '~/data/walls';
 import { wallEditStyles } from './styles';
 import WallMutate from './wall-mutate';
 import { allSharedCornersAreSquare } from './utils';
+import { useIsWallDraw } from './provider';
+import WallCreate from './wall-create';
 
 export interface WallsProps {
   walls: Wall[];
@@ -18,6 +20,7 @@ interface WallEditState {
 }
 
 const WallsEditor = ({ walls, onCommit }: WallsProps) => {
+  const [isWallDraw, setIsWallDraw] = useIsWallDraw();
   const [state, dispatch] = React.useReducer(
     (state: WallEditState, action: Partial<WallEditState>) => {
       return { ...state, ...action };
@@ -41,6 +44,11 @@ const WallsEditor = ({ walls, onCommit }: WallsProps) => {
   const onLineSelect = (pos: Wall['position']) => {
     const i = state.walls.findIndex(w => isEqual(w.position, pos));
     dispatch({ selectedWall: typeof i === 'number' ? i : null });
+  };
+
+  const onWallCreate = (pos: Wall['position']) => {
+    dispatch({ walls: [...state.walls, { position: pos }] });
+    setIsWallDraw(false);
   };
 
   const onWallChange = (
@@ -91,14 +99,16 @@ const WallsEditor = ({ walls, onCommit }: WallsProps) => {
       <svg ref={svgRef}>
         {state.walls.map(({ position }) => (
           <g key={JSON.stringify(position)}>
-            <line
-              className="hit-area"
-              onClick={() => onLineSelect(position)}
-              x1={`${position[0][0]}em`}
-              y1={`${position[0][1] * -1}em`}
-              x2={`${position[1][0]}em`}
-              y2={`${position[1][1] * -1}em`}
-            />
+            {!selectedPosition && !isWallDraw && (
+              <line
+                className="hit-area"
+                onClick={() => onLineSelect(position)}
+                x1={`${position[0][0]}em`}
+                y1={`${position[0][1] * -1}em`}
+                x2={`${position[1][0]}em`}
+                y2={`${position[1][1] * -1}em`}
+              />
+            )}
             <line
               x1={`${position[0][0]}em`}
               y1={`${position[0][1] * -1}em`}
@@ -117,6 +127,7 @@ const WallsEditor = ({ walls, onCommit }: WallsProps) => {
             onChange={onWallChange}
           />
         )}
+        {isWallDraw && <WallCreate onCreated={onWallCreate} />}
       </svg>
     </Box>
   );

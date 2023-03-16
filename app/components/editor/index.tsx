@@ -7,11 +7,14 @@ import {
 } from './provider';
 import Scene from '../scene';
 import Walls from '../walls';
-import { Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
+import { Box, Flex, FormControl, FormLabel, Switch } from '@chakra-ui/react';
 import ZoomControl from '../zoom-control';
 import RotateControl from '../rotate-control';
 import WallsEditor from '../walls-editor';
 import type { Wall } from '~/data/walls';
+import ToolPalette from '../tool-palette';
+import { ScenePanProvider } from '../scene/pan-provider';
+import { WallDrawProvider } from '../walls-editor/provider';
 
 const Editor = () => {
   const { zoom, walls, rotateX, rotateZ, editMode } = useEditorState();
@@ -35,17 +38,22 @@ const Editor = () => {
   };
 
   return (
-    <>
-      <Scene zoom={zoom} rotateX={rotateX} rotateZ={rotateZ}>
-        {editMode === null && <Walls walls={walls} />}
-        {editMode === EditMode.wall && (
-          <WallsEditor walls={walls} onCommit={onCommitEdit} />
-        )}
-      </Scene>
+    <Box flexGrow={1} height="100vh" position="relative">
+      <ScenePanProvider>
+        <WallDrawProvider>
+          <Scene zoom={zoom} rotateX={rotateX} rotateZ={rotateZ}>
+            {editMode === null && <Walls walls={walls} />}
+            {editMode === EditMode.wall && (
+              <WallsEditor walls={walls} onCommit={onCommitEdit} />
+            )}
+          </Scene>
+          <ToolPalette />
+        </WallDrawProvider>
+      </ScenePanProvider>
       <Flex
         direction="column"
         gap="4"
-        position="fixed"
+        position="absolute"
         bottom="4"
         right="4"
         width="32"
@@ -64,7 +72,7 @@ const Editor = () => {
         <ZoomControl />
         <RotateControl />
       </Flex>
-    </>
+    </Box>
   );
 };
 

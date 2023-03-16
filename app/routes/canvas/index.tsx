@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Editor from '~/components/editor';
 import EditorPanel from '~/components/editor-panel';
 import { EditorProvider } from '~/components/editor/provider';
@@ -17,9 +17,7 @@ export default function Canvas() {
     <EditorProvider defaultWalls={someWalls}>
       <Flex>
         <EditorPanel />
-        <Box overflow="auto" width="100%" height="100vh">
-          <Editor />
-        </Box>
+        <Editor />
       </Flex>
     </EditorProvider>
   );
