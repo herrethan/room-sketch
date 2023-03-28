@@ -1,5 +1,6 @@
+export type XY = [number, number];
 // [[left, bottom], [left, bottom]], ie: [[x, y], [x, y]]
-export type WallPosition = [[number, number], [number, number]];
+export type WallPosition = [XY, XY];
 
 export interface Wall {
   position: WallPosition;

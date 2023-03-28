@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Wall } from '~/data/walls';
+import type { Wall, XY } from '~/data/walls';
 import { PX_PER_EM } from '~/theme/styles';
 import { SCENE_SIZE } from '../scene';
 import { toNearestEM } from '../walls-editor/utils';
@@ -112,7 +112,7 @@ export const useEditorComputeCoordinates = () => {
   }
   // derives scene coordinates (ems) from mouse event offsetX offsetY (pixels)
   const mouseCoordsToSceneCoords = React.useCallback(
-    (x: number, y: number): [number, number] => {
+    (x: number, y: number): XY => {
       const offset = SCENE_SIZE % 2 === 0 ? PX_PER_EM / 2 : 0;
       return [
         toNearestEM(x / zoom - (SCENE_SIZE * PX_PER_EM) / 2 + offset),

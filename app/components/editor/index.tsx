@@ -41,7 +41,7 @@ const Editor = () => {
     <Box flexGrow={1} height="100vh" position="relative">
       <ScenePanProvider>
         <WallDrawProvider>
-          <Scene zoom={zoom} rotateX={rotateX} rotateZ={rotateZ}>
+          <Scene zoom={zoom} rotateX={rotateX} rotateZ={rotateZ} showOrigin>
             {editMode === null && <Walls walls={walls} />}
             {editMode === EditMode.wall && (
               <WallsEditor walls={walls} onCommit={onCommitEdit} />

@@ -60,7 +60,8 @@ export const wallEditStyles: SystemStyleObject = {
         pointerEvents: 'none',
       },
       '&.ghost-dragging': {
-        fill: 'blackAlpha.200',
+        fill: 'green.200',
+        opacity: 0.6,
         stroke: 'none',
         pointerEvents: 'none',
       },

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Wall } from '~/data/walls';
-import { isAllowedAngle, toNearestEM } from './utils';
+import { toBestAllowedAngle, toNearestEM } from './utils';
 
 interface WallMutateProps {
   position: Wall['position'];
@@ -102,17 +102,21 @@ const WallMutate = ({
       // allow willy-nilly dragging of vertices, constrained to allowed angles
       case DragType.vertex0:
         const new0: Wall['position'] = [
-          [position[0][0] + delta.x, position[0][1] + delta.y],
-          position[1],
+          ...toBestAllowedAngle(position[1], [
+            position[0][0] + delta.x,
+            position[0][1] + delta.y,
+          ]),
         ];
-        if (isAllowedAngle(new0)) onChange(new0);
+        onChange([new0[1], new0[0]]);
         break;
       case DragType.vertex1:
         const new1: Wall['position'] = [
-          position[0],
-          [position[1][0] + delta.x, position[1][1] + delta.y],
+          ...toBestAllowedAngle(position[0], [
+            position[1][0] + delta.x,
+            position[1][1] + delta.y,
+          ]),
         ];
-        if (isAllowedAngle(new1)) onChange(new1);
+        onChange(new1);
         break;
       default:
         break;
@@ -136,6 +140,39 @@ const WallMutate = ({
 
   return (
     <>
+      {dragOrigin && dragOrigin.type !== DragType.line && (
+        <circle
+          className="ghost-dragging"
+          cx={`${position[dragOrigin.type === DragType.vertex0 ? 0 : 1][0]}em`}
+          cy={`${
+            position[dragOrigin.type === DragType.vertex0 ? 0 : 1][1] * -1
+          }em`}
+          r={'0.75em'}
+        />
+      )}
+      {dragOrigin && dragOrigin.type === DragType.line && (
+        <>
+          <circle
+            className="ghost-dragging"
+            cx={`${position[0][0]}em`}
+            cy={`${position[0][1] * -1}em`}
+            r={'0.75em'}
+          />
+          <circle
+            className="ghost-dragging"
+            cx={`${position[1][0]}em`}
+            cy={`${position[1][1] * -1}em`}
+            r={'0.75em'}
+          />
+        </>
+      )}
+      <line
+        className="selected"
+        x1={`${position[0][0]}em`}
+        y1={`${position[0][1] * -1}em`}
+        x2={`${position[1][0]}em`}
+        y2={`${position[1][1] * -1}em`}
+      />
       {!dragOrigin && (
         <line
           onMouseDown={e => onDragStart(e, DragType.line)}
@@ -146,23 +183,6 @@ const WallMutate = ({
           x2={`${position[1][0]}em`}
           y2={`${position[1][1] * -1}em`}
           style={{ cursor }}
-        />
-      )}
-      <line
-        className="selected"
-        x1={`${position[0][0]}em`}
-        y1={`${position[0][1] * -1}em`}
-        x2={`${position[1][0]}em`}
-        y2={`${position[1][1] * -1}em`}
-      />
-      {dragOrigin && (
-        <circle
-          className="ghost-dragging"
-          cx={`${position[dragOrigin.type === DragType.vertex0 ? 0 : 1][0]}em`}
-          cy={`${
-            position[dragOrigin.type === DragType.vertex0 ? 0 : 1][1] * -1
-          }em`}
-          r={'0.75em'}
         />
       )}
       <circle

@@ -1,5 +1,5 @@
 import isEqual from 'lodash/isEqual';
-import type { Wall, WallPosition } from '~/data/walls';
+import type { Wall, WallPosition, XY } from '~/data/walls';
 
 export const WALL_THICKNESS = 0.5;
 export const WALL_HEIGHT = 8;
@@ -28,9 +28,9 @@ export const wallsSharingVertices = (
 
 // computes angle in degrees given 3 points
 export const computeTheta = (
-  p1: [number, number],
-  p2: [number, number], // p2 is the center point
-  p3: [number, number]
+  p1: XY,
+  p2: XY, // p2 is the center point
+  p3: XY
 ) => {
   const a = Math.pow(p2[0] - p1[0], 2) + Math.pow(p2[1] - p1[1], 2);
   const b = Math.pow(p2[0] - p3[0], 2) + Math.pow(p2[1] - p3[1], 2);
@@ -42,10 +42,10 @@ export const computeTheta = (
 
 // nudges pointA towards pointB
 export const nudgePointTowardsPoint = (
-  pointA: [number, number],
-  pointB: [number, number],
+  pointA: XY,
+  pointB: XY,
   nudgeAmount: number
-): [number, number] => {
+): XY => {
   const x =
     pointA[0] === pointB[0]
       ? pointA[0]

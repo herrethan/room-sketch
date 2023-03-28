@@ -1,26 +1,24 @@
 import isEqual from 'lodash/isEqual';
 import React from 'react';
-import type { Wall } from '~/data/walls';
+import type { Wall, XY } from '~/data/walls';
 import { useEditorComputeCoordinates } from '../editor/provider';
 import { useSceneEvent } from '../scene/provider';
-import { isAllowedAngle } from './utils';
+import { isAllowedAngle, toBestAllowedAngle } from './utils';
 
 interface WallCreateProps {
   onCreated: (newPosition: Wall['position']) => void;
 }
 
-type Position = [number, number];
-
 interface WallCreateState {
-  mousePosition?: Position;
+  mousePosition?: XY;
   isDrawing: boolean;
-  startVertex: Position | null;
-  endVertex: Position | null;
+  startVertex: XY | null;
+  endVertex: XY | null;
 }
 
 type OnMouseEvent = {
   type: keyof Pick<DocumentEventMap, 'mousedown' | 'mouseup' | 'mousemove'>;
-  position: Position;
+  position: XY;
 };
 
 type WallCreateAction = OnMouseEvent;
@@ -42,13 +40,9 @@ const reducer = (
         return { ...state, startVertex: position };
       }
     case 'mousemove':
-      if (
-        state.startVertex &&
-        !isEqual(state.startVertex, position) &&
-        isAllowedAngle([state.startVertex, position])
-        // TODO: create new toAllowedAngle function for better UX
-      ) {
-        return { ...state, mousePosition: position, isDrawing: true };
+      if (state.startVertex && !isEqual(state.startVertex, position)) {
+        const conformedPos = toBestAllowedAngle(state.startVertex, position);
+        return { ...state, mousePosition: conformedPos[1], isDrawing: true };
       }
       if (!state.startVertex) {
         return { ...state, mousePosition: position };
