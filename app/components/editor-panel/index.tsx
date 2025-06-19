@@ -19,8 +19,13 @@ const EditorPanel = () => {
   };
 
   return (
-    <Box width="64" bgColor="white" flexShrink={0} shadow="md" zIndex="docked">
-      <FormControl display="flex" alignItems="center" id="switch-mode-control">
+    <Box width="48" bgColor="white" flexShrink={0} shadow="md" zIndex="docked">
+      <FormControl
+        display="flex"
+        m={2}
+        alignItems="center"
+        id="switch-mode-control"
+      >
         <FormLabel htmlFor="switch-mode" mb="0">
           Wall edit mode:
         </FormLabel>

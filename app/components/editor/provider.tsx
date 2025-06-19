@@ -52,7 +52,12 @@ interface EnterMode {
   payload: EditMode | null;
 }
 
-export type EditorActions = ModifyView | RecreateWalls | EnterMode;
+interface DeleteWall {
+  type: EditorAction.delete;
+  payload: Wall;
+}
+
+export type EditorActions = ModifyView | RecreateWalls | EnterMode | DeleteWall;
 
 type EditorProviderContext = {
   state: EditorState;

@@ -11,6 +11,7 @@ import WallCreate from './wall-create';
 export interface WallsProps {
   walls: Wall[];
   onCommit: (walls: Wall[]) => void;
+  onDelete: (wall: Wall) => void;
 }
 
 interface WallEditState {
@@ -19,7 +20,7 @@ interface WallEditState {
   // history?: // TODO: for managing undos
 }
 
-const WallsEditor = ({ walls, onCommit }: WallsProps) => {
+const WallsEditor = ({ walls, onCommit, onDelete }: WallsProps) => {
   const [isWallDraw, setIsWallDraw] = useIsWallDraw();
   const [state, dispatch] = React.useReducer(
     (state: WallEditState, action: Partial<WallEditState>) => {
@@ -50,6 +51,25 @@ const WallsEditor = ({ walls, onCommit }: WallsProps) => {
     dispatch({ walls: [...state.walls, { position: pos }] });
     setIsWallDraw(false);
   };
+
+  React.useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (selectedPosition && e.code === 'Backspace') {
+        dispatch({
+          walls: state.walls.filter(
+            w => `${w.position}` !== `${selectedPosition}`
+          ),
+          selectedWall: null,
+        });
+        onDelete({ position: selectedPosition });
+        setIsWallDraw(false);
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [selectedPosition, onDelete]);
 
   const onWallChange = (
     newPosition: Wall['position'],

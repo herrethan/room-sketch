@@ -10,6 +10,13 @@ export const reducer = (state: EditorState, action: EditorActions) => {
       return { ...state, walls: action.payload };
     case EditorAction.mode:
       return { ...state, editMode: action.payload };
+    case EditorAction.delete:
+      return {
+        ...state,
+        walls: state.walls.filter(
+          w => `${w.position}` !== `${action.payload.position}`
+        ),
+      };
     default:
       return state;
   }

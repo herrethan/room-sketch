@@ -26,30 +26,29 @@ const RotateControl = () => {
   };
 
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="center" gap={2}>
       <Text as="label" flexShrink="0" mb="0">
         Rotate
       </Text>
-      <Flex>
-        <IconButton
-          onClick={() => onRotate('left')}
-          colorScheme="teal"
-          variant="outline"
-          fontSize="lg"
-          size="sm"
-          aria-label="rotate left"
-          icon={<MdRotateRight />}
-        ></IconButton>
-        <IconButton
-          onClick={() => onRotate('right')}
-          colorScheme="teal"
-          variant="outline"
-          fontSize="lg"
-          size="sm"
-          aria-label="rotate right"
-          icon={<MdRotateLeft />}
-        ></IconButton>
-      </Flex>
+
+      <IconButton
+        onClick={() => onRotate('left')}
+        colorScheme="teal"
+        variant="outline"
+        fontSize="lg"
+        size="sm"
+        aria-label="rotate left"
+        icon={<MdRotateRight />}
+      ></IconButton>
+      <IconButton
+        onClick={() => onRotate('right')}
+        colorScheme="teal"
+        variant="outline"
+        fontSize="lg"
+        size="sm"
+        aria-label="rotate right"
+        icon={<MdRotateLeft />}
+      ></IconButton>
     </Flex>
   );
 };

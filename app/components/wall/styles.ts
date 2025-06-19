@@ -7,17 +7,15 @@ const wallStyles: SystemStyleObject = {
   position: 'absolute',
   top: `-${WALL_THICKNESS / 2}em`,
   left: `-${WALL_THICKNESS / 2}em`,
-  // top: 0,
-  // left: 0,
   transformStyle: 'preserve-3d',
   transformOrigin: `${WALL_THICKNESS / 2}em ${WALL_THICKNESS / 2}em`,
   opacity: 1,
-  // transform: `translate3D(0em, 0em, 0em) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`,
-  // width: `5em`,
   height: `${WALL_THICKNESS}em`,
   '& .face': {
     position: 'absolute',
     transformStyle: 'preserve-3d',
+    transitionProperty: 'background-color',
+    transitionDuration: 'slow',
     backgroundColor: 'white',
     boxShadow: `inset 0 0 0 1px rgba(0, 0, 0, 0.4)`,
     overflow: 'hidden',
@@ -48,10 +46,6 @@ const wallStyles: SystemStyleObject = {
     left: '100%',
     transform: `rotateY(90deg) translateX(-100%)`,
   },
-  // '& .front, & .back': {
-  //   width: `5em`,
-  //   height: `${WALL_HEIGHT}em`,
-  // },
   '& .front': {
     top: '100%',
     transform: `rotateX(-90deg) translateY(-100%)`,
@@ -72,7 +66,21 @@ const normalizePosition = (position: WallPosition): WallPosition => {
   return position;
 };
 
-export const computeWall = (position: WallPosition): SystemStyleObject => {
+const getLuminance = (rotation: number, stageRotation: number) => {
+  // compute stage angle in 0-90 deg terms
+  const stageModulo = Math.abs(((stageRotation - 45 + 180) % 360) - 180);
+  const zeroToNinety = stageModulo > 90 ? 180 - stageModulo : stageModulo;
+  // merge calculation with rotation of wall itself
+  const withRotation = Math.abs(zeroToNinety - rotation);
+  const face = Math.abs(withRotation > 90 ? 180 - withRotation : withRotation);
+  // map range 0-90 to 95-100 (degrees to lightness %)
+  return 97 + ((face - 0) / (90 - 0)) * (100 - 97);
+};
+
+export const computeWall = (
+  position: WallPosition,
+  stageRotation?: number
+): SystemStyleObject => {
   const pos = normalizePosition(position);
   const start = {
     x: pos[0][0],
@@ -89,6 +97,10 @@ export const computeWall = (position: WallPosition): SystemStyleObject => {
   const rotation =
     Math.atan2(end.y - start.y, end.x - start.x) * (180 / Math.PI);
 
+  const luminance = stageRotation
+    ? getLuminance(rotation, stageRotation)
+    : null;
+
   return {
     ...wallStyles,
     width: `${length}em`,
@@ -98,6 +110,7 @@ export const computeWall = (position: WallPosition): SystemStyleObject => {
     '& .front, & .back': {
       width: `${length}em`,
       height: `${WALL_HEIGHT}em`,
+      backgroundColor: `hsl(0 0% ${luminance}% / 1);`,
     },
   };
 };

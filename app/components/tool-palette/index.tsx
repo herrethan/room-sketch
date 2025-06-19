@@ -58,7 +58,7 @@ const ToolPalette = () => {
       right="4"
       justifyContent="center"
     >
-      <ButtonGroup variant="outline" colorScheme="teal" spacing="0">
+      <ButtonGroup variant="outline" colorScheme="teal" spacing={2}>
         <IconButton
           variant={panMode === 'on' ? 'solid' : 'outline'}
           onClick={togglePanMode}

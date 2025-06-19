@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 import { computeWall } from './styles';
 import type { WallPosition } from '~/data/walls';
+import { useEditorState } from '../editor/provider';
 
 // .bk -> .bottom
 // .ft -> .top
@@ -15,7 +16,8 @@ export interface WallProps {
 }
 
 const Wall = ({ position }: WallProps) => {
-  const styles = computeWall(position);
+  const state = useEditorState();
+  const styles = computeWall(position, state.rotateZ);
 
   return (
     <Box sx={styles}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { SystemStyleObject } from '@chakra-ui/react';
-import { Flex, Box, Text } from '@chakra-ui/react';
+import { Flex, Box } from '@chakra-ui/react';
 import theme from '~/theme';
 import { useScenePan } from './pan-provider';
 import { useDragToScroll } from '~/hooks/use-drag-to-scroll';
@@ -17,7 +17,7 @@ const gridStyles: SystemStyleObject = {
   alignItems: 'center',
   justifyContent: 'center',
   transformStyle: 'preserve-3d',
-  transition: `transform ${theme.transition.duration.normal} ${theme.transition.easing['ease-in-out']}`,
+  transition: `transform ${theme.transition.duration.slow} ${theme.transition.easing['ease-in-out']}`,
   backgroundImage: `linear-gradient(${theme.colors.gray[200]} 1px, transparent 1px),
     linear-gradient(90deg, ${theme.colors.gray[200]} 1px, transparent 1px)`,
   backgroundSize: `1em 1em, 1em 1em`,

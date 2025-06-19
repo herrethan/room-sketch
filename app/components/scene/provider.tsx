@@ -48,7 +48,6 @@ export const useSceneEvent = (
 
   React.useEffect(() => {
     if (element) {
-      console.log('eh!');
       if (onDown) element.addEventListener('mousedown', onDown);
       if (onMove) element.addEventListener('mousemove', onMove);
       if (onUp) element.addEventListener('mouseup', onUp);

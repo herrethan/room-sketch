@@ -37,6 +37,13 @@ const Editor = () => {
     });
   };
 
+  const onDelete = (wall: Wall) => {
+    dispatch({
+      type: EditorAction.delete,
+      payload: wall,
+    });
+  };
+
   return (
     <Box flexGrow={1} height="100vh" position="relative">
       <ScenePanProvider>
@@ -44,7 +51,11 @@ const Editor = () => {
           <Scene zoom={zoom} rotateX={rotateX} rotateZ={rotateZ} showOrigin>
             {editMode === null && <Walls walls={walls} />}
             {editMode === EditMode.wall && (
-              <WallsEditor walls={walls} onCommit={onCommitEdit} />
+              <WallsEditor
+                walls={walls}
+                onCommit={onCommitEdit}
+                onDelete={onDelete}
+              />
             )}
           </Scene>
           <ToolPalette />
