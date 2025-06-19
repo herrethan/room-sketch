@@ -2,6 +2,12 @@
 
 Built with [Remix](https://remix.run/docs).
 
+The idea is you sketch rooms, like this:
+
+<img width="725" alt="Screen Shot 2025-06-18 at 10 49 16 PM" src="https://github.com/user-attachments/assets/f73e0e09-28f2-446e-9524-c6e407ee674a" />
+
+One day I'll make CSS furniture (hah!). 
+
 ## Development
 
 ```sh
